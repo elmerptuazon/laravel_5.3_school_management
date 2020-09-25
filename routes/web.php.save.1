@@ -1,0 +1,124 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    // return view('auth/login');
+    return redirect()->action('LoginWhereTo@index');
+});
+
+Route::get('admin', function () {
+    return view('admin_template');
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+/***Route::get('test', 'TestController@index');***/
+Route::get('/loginwhereto', 'LoginWhereTo@index');
+Route::get('/accountswitch/{id}', 'LoginWhereTo@accountSwitcher');
+
+Route::get('overview', 'StudentController@index');
+Route::get('overview/{date}', 'StudentController@overviewDate');
+Route::get('replyslips', 'StudentController@replyslips');
+Route::get('subjects/{subj}', 'StudentController@subjects');
+Route::get('subjects/{subj}/{date}', 'StudentController@subjectsDate');
+Route::get('directory/{dir}', 'StudentController@directory');
+Route::get('profile', 'StudentController@profile');
+Route::get('profile/{sid}', 'StudentController@profile');
+Route::get('profile/student/{sid}', 'StudentController@profile');
+
+Route::get('toverview', 'TeacherController@index');
+Route::get('toverview/{date}', 'TeacherController@overviewDate');
+Route::get('tprofile/{tid}', 'TeacherController@profile');
+Route::get('tclass/{subj}/{grade}-{section}', 'TeacherController@subjects');
+Route::get('treplyslips', 'TeacherController@replyslips');
+
+Route::get('tattendance', 'TeacherController@attendance');
+Route::get('tattendance/{grade}-{section}', 'TeacherController@attendance');
+Route::get('tattendance/{grade}-{section}/{date}', 'TeacherController@attendance');
+
+Route::post('tattendance/submit', 'TeacherController@attendanceSubmit');
+
+Route::post('upload', 'TeacherController@upload');
+
+Route::get('aoverview', 'AdminController@index');
+Route::get('adirectory/search/s/{searchterm}', 'AdminController@directorySearchStudent');
+Route::get('adirectory/search/t/{searchterm}', 'AdminController@directorySearchTeacher');
+Route::get('adirectory/students', 'AdminController@sdirectory');
+Route::get('adirectory/students/{grade}-{section}', 'AdminController@sdirectory');
+Route::get('areplyslips', 'AdminController@replyslips');
+Route::get('areplyslip/input/{id}', 'AdminController@replyslipInput');
+Route::get('areplyslip/input/{id}/{grade}-{section}', 'AdminController@replyslipInput');
+Route::post('areplyslip/input/submit/{id}', 'AdminController@replyslipInputSubmit');
+Route::post('upload/replyslip', 'AdminController@uploadReplyslip');
+
+Route::get('adirectory/teachers', 'AdminController@tdirectory');
+Route::get('acalendar', 'AdminController@calendar');
+Route::post('acalendar/post', 'AdminController@calendarPost');
+Route::post('acalendar/e', 'AdminController@calendarEdit');
+Route::post('acalendar/x', 'AdminController@calendarDel');
+Route::get('aincidents', 'AdminController@incidents');
+Route::post('aincident/post', 'AdminController@incidentPost');
+Route::post('aincident/e', 'AdminController@incidentEdit');
+Route::post('aincident/x', 'AdminController@incidentDel');
+
+Route::get('anotifications', 'AdminController@notifications');
+Route::get('notifications', 'StudentController@notifications');
+Route::post('notification/post', 'AdminController@notificationPost');
+
+Route::get('ajax/{subj}/{date}', 'AjaxController@ajaxHomeworkSubjects');
+Route::get('ajax/{subj}/{totals}/{page}', 'AjaxController@ajaxHWSubjectsLoadMore');
+Route::get('ajaxt/{subj}/{grade}-{section}/{date}', 'AjaxController@ajaxTeachersHomeworkSubjects');
+Route::get('ajaxt/{subj}/{grade}-{section}/{totals}/{page}', 'AjaxController@ajaxTeachersHWSubjectsLoadMore');
+Route::get('ajaxSched/{grade}-{section}', 'AjaxController@ajaxScheduleAll');
+
+Route::post('ajaxAssignment/e/{id}', 'AjaxController@ajaxAssignmentEdit');
+Route::post('ajaxAssignment/x/{id}', 'AjaxController@ajaxAssignmentDel');
+Route::post('ajaxTest/e/{id}', 'AjaxController@ajaxTestEdit');
+Route::post('ajaxTest/x/{id}', 'AjaxController@ajaxTestDel');
+Route::post('ajaxAS/e/{id}', 'AjaxController@ajaxASEdit');
+Route::post('ajaxAS/x/{id}', 'AjaxController@ajaxASDel');
+Route::post('ajaxHO/e/{id}', 'AjaxController@ajaxHOEdit');
+Route::post('ajaxHO/x/{id}', 'AjaxController@ajaxHODel');
+
+Route::post('ajaxRSOption/e/{id}', 'AjaxController@ajaxRSOptionEdit');
+Route::post('ajaxRSOption/x/{id}', 'AjaxController@ajaxRSOptionDel');
+Route::post('ajaxRS/x/{id}', 'AjaxController@ajaxRSDel');
+Route::post('ajaxRS/e/{id}', 'AjaxController@ajaxRSEdit');
+
+Route::post('ajaxNotify/update', 'AjaxController@notifyUpdate');
+
+Route::get('view/pdf', 'ViewAssets@index');
+Route::get('view/test/{id}', 'ViewAssets@test');
+Route::get('view/as/{id}', 'ViewAssets@activitysheet');
+Route::get('view/ho/{id}', 'ViewAssets@handout');
+Route::get('view/rs/{id}', 'ViewAssets@replyslip');
+
+
+Route::post('optionsadd', 'AdminController@addOptionRs');
+
+
+
+Route::post('assignment/post', 'TeacherController@assignmentPost');
+
+
+
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/test',function () {
+print_r(DB::connection());
+    return view('test');
+});
